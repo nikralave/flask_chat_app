@@ -5,6 +5,7 @@ import os
 app = Flask(__name__)
 messages = []
 bannedwords = ['sugar', 'poop']
+personal_messages =[]
 
 # @app.route('rooms/add')
 # def add_room():
@@ -23,12 +24,27 @@ def do_login():
 
 @app.route("/<username>")
 def get_userpage(username):
-    return render_template("chat.html", logged_in_as=username, all_the_messages=messages)
+    filtered_messages = []
+    for message in messages:
+        if not message["body"].startswith('@'):
+            filtered_messages.append(message)
+        
+        elif message["body"].startswith('@' + username):
+            filtered_messages.append(message)
+        
+        elif message["sender"] == username:
+            filtered_messages.append(message)
+            
+    return render_template("chat.html", logged_in_as=username, all_the_messages = filtered_messages)
     
 @app.route("/new", methods=["POST"])
 def add_message():
     username = request.form['username']
     text = request.form['message']
+    
+    
+    # if text.startswith('@') + username:
+    #     return redirect ('personal')
   
   #--------------------------------------------------------  
     # for banned_word in bannedwords:
@@ -52,6 +68,8 @@ def add_message():
     
     messages.append(message)
     return redirect(username)
+
+
     
    
 if __name__ == '__main__':
