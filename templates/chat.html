@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <h1> You are logged in as {{ logged_in_as }} </h1>
+    <h1>Chatterbox</h1>
+    <p> You are logged in as {{ logged_in_as }} </p>
     
     <form action="/new" method= "POST">
         <input type="text" name="message" placeholder="What's up?"/>
@@ -21,11 +22,11 @@
     <p><strong>{{message.sender}}</strong>: {{ message.body }}</p>
     {% endfor %}
     
-    <script>
-        setTimeout(function() {
-            location.reload();
-        }, 5000);
-    </script>
+    <!--<script>-->
+    <!--setTimeout(function(){-->
+    <!--        location.reload();-->
+    <!--    }, 5000);-->
+    <!--</script>-->
 </body>
 
 </html>
